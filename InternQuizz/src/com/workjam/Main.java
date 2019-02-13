@@ -24,14 +24,13 @@ public class Main {
      * Vous devrez rédiger un programme en 2 étapes:
      * 1. Créer une liste de User en utilisant le patron de conception 'Factory'
      *      La factory devrait pouvoir générer un user de n'importe quel type selon des paramètres que vous définirez.
-     *      //todo générer avec user.permission, va créer un user du type choisi
      *
-     *      Vous utiliserez cette factory afin de générer une liste de Users d'au moins 100 employees, 20 managers et 5 admins. todo fait
-     *      Vous devez générer un nom aléatoire pour chaque User. todo fait
-     *      Il est important d'avoir des Users actifs/inactifs pour chaque type. todo fait
+     *      Vous utiliserez cette factory afin de générer une liste de Users d'au moins 100 employees, 20 managers et 5 admins.
+     *      Vous devez générer un nom aléatoire pour chaque User.
+     *      Il est important d'avoir des Users actifs/inactifs pour chaque type.
      *
      * 2. Traiter la liste à l'aide d'un filtre, d'un ordonnencement et d'une pagination
-     *      Filtrer -> Filter.java todo fait
+     *      Filtrer -> Filter.java
      *      Ordonner -> Ordonner les utilisateurs par ordre alphabétique de leur nom selon la valeur du champ 'sort'
      *      Paginer -> Page.java
      *
@@ -59,12 +58,9 @@ public class Main {
 
         //TODO Filtrer la liste
 
-        //filtrons pour avoir les managers actifs
-        Filter filter = new Filter(true, Permission.MANAGER);
-
         List<User> filteredList = new ArrayList<>();
         for (User user : userList) {
-            if (user.isActive() != filter.isActive()){
+            if (filter.isActive() != null && user.isActive() != filter.isActive()){
                 continue;
             }
             /*
@@ -93,20 +89,22 @@ public class Main {
             filteredList.add(user);
         }
 
-        //List<User> listeActifs = userList.stream().filter(user -> user.isActive() == filter.isActive()).collect(Collectors.toList());
-
         //TODO Ordonner la liste
 
-        filteredList.sort(new Comparator<User>() {
-            @Override
-            public int compare(User o1, User o2) {
-                
-            }
-        });
+        if (sort){
+            filteredList.sort(Comparator.comparing(User::getName));
+        }
+
         //TODO Paginer la liste
+
+        List<User> listePaginee = new ArrayList<>();
+        for (int i = page.getStartPos(); i< page.getSize() || i < filteredList.size(); i++){
+            listePaginee.add(filteredList.get(i));
+        }
 
         //TODO Imprimer la liste dans la console
 
+        printUsers(listePaginee);
 
     }
 
