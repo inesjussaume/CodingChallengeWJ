@@ -5,6 +5,9 @@ import com.workjam.objects.User.Employee;
 import com.workjam.objects.User.Manager;
 import com.workjam.objects.User.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserFactory {
 
     private static char letter = 'A';
@@ -13,24 +16,35 @@ public class UserFactory {
     public static User getUser(User.Permission permission) {
 
         //TODO Implémenter la factory
-        if (permission.equals(User.Permission.EMPLOYEE)){
-            Employee e = new Employee();
-            e.setName(getRandomName());
-            return e;
+        User user;
 
-        }else if (permission.equals(User.Permission.MANAGER)){
-            return new Manager();
-            Manager m = new Manager();
-            m.setName(getRandomName());
-            return m;
-
-        }else if (permission.equals(User.Permission.ADMIN)){
-            return new Admin();
-
-        } else{
-            return null;
+        switch (permission) {
+            case EMPLOYEE:
+                user = new Employee();
+                break;
+            case MANAGER:
+                user = new Manager();
+                break;
+            case ADMIN:
+                user = new Admin();
+                break;
+            default:
+                return null; //au cas où permission inattendue
         }
 
+        user.setName(getRandomName());
+        return user;
+    }
+
+    //nouvelle fonction pour créer une liste de users
+    public static List<User> getUserList(User.Permission permission, int count){
+        List<User> userList = new ArrayList<>();
+
+        for (int i = 0; i < count; i++){
+            userList.add(getUser(permission));
+        }
+
+        return userList;
     }
 
     private static String getRandomName() {
