@@ -6,6 +6,8 @@ import com.workjam.objects.User.Employee;
 import com.workjam.objects.User.User;
 import com.workjam.objects.User.User.Permission;
 
+import com.workjam.factories.UserFactory;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +41,10 @@ public class Main {
      */
     public static void main(String[] args) {
         //TODO Générer la liste de users en utilisant la factory
-        List<User> userList = new List<User>();
+        //List<User> userList = new List<User>();
+        UserFactory userFactory = new UserFactory();
+        User user = null;
+        user = userFactory.getUser(Permission.EMPLOYEE);
 
 
 

@@ -14,10 +14,15 @@ public class UserFactory {
 
         //TODO Implémenter la factory
         if (permission.equals(User.Permission.EMPLOYEE)){
-            return new Employee();
+            Employee e = new Employee();
+            e.setName(getRandomName());
+            return e;
 
         }else if (permission.equals(User.Permission.MANAGER)){
             return new Manager();
+            Manager m = new Manager();
+            m.setName(getRandomName());
+            return m;
 
         }else if (permission.equals(User.Permission.ADMIN)){
             return new Admin();
